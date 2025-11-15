@@ -15,7 +15,7 @@ import torch
 
 orig_load = torch.load
 
-def patched_load(*args, *kwargs):
+def patched_load(*args, **kwargs):
     kwargs["weights_only"] = False
     return orig_load(args, **kwargs)
 
