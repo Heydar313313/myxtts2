@@ -11,7 +11,15 @@ from TTS.utils.manage import ModelManager
 from dataclasses import dataclass, field
 from typing import Optional
 from transformers import HfArgumentParser
+import torch
 
+orig_load = torch.load
+
+def patched_load(*args, *kwargs):
+    kwargs["weights_only"] = False
+    return orig_load(args, **kwargs)
+
+torch.load = patched_load
 import argparse
 
 def create_xtts_trainer_parser():
